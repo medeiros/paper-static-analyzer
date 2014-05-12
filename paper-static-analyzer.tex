@@ -67,7 +67,7 @@ Sabe-se que quanto mais cedo um problema é encontrado no código, mais barato �
 \label{flow_after}
 \end{figure}
 
-Esta simplificação no fluxo exige, na prática, que o desenvolvedor realize a análise estática de código (e a correção indicada) antes de versionar a modificação. O SonarQube poderia, posteriormente, evidenciar uma estabilidade no número de ocorrências em relação ao tempo (e com esta estabilidade observada, seria possível eliminar a prática de \emph{"enxugar gelo"}, através da atuação na redução efetiva de ocorrências sem que novas ocorrências estejam sendo adicionadas pelo ciclo de desenvolvimento em paralelo). 
+Esta simplificação no fluxo exige, na prática, que o desenvolvedor realize a análise estática de código (e a correção indicada) antes de versionar a modificação\cite{jamesshore_ci_attitude}. O SonarQube poderia, posteriormente, evidenciar uma estabilidade no número de ocorrências em relação ao tempo (e com esta estabilidade observada, seria possível eliminar a prática de \emph{"enxugar gelo"}, através da atuação na redução efetiva de ocorrências sem que novas ocorrências estejam sendo adicionadas pelo ciclo de desenvolvimento em paralelo). 
 
 Contudo, para que o desenvolvedor incorpore o trabalho de análise de código-fonte à sua rotina de forma a não impactar em sua produtividade, é preciso que as ferramentas de análise estática de código sejam o mais transparente possíveis. O uso do SonarQube instalado localmente na máquina do desenvolvedor é uma alternativa pouco produtiva neste contexto, pois a ação de executar a validação das regras exige esforço explícito do desenvolvedor, de forma que não é transparente. Uma melhor abordagem é a de que a própria IDE indique a não-conformidade do código conforme o mesmo esteja sendo escrito. Para isto, a IDE precisa fazer uso de plugins que validem o código-fonte em relação às regras de qualidade assumidas pela empresa. 
 
@@ -91,7 +91,7 @@ Desta forma, objetivando a configuração da IDE que valide automaticamente o c�
 \item exportar as regras do SonarQube de cada um dos plugins e importar no Eclipse;
 \end{itemize}
 
-A versão do SonarQube utilizada neste trabalho é a 4.6, e a versão do Eclipse é a 4.3.2 (Kepler).
+A versão do SonarQube utilizada neste trabalho é a 4.3, e a versão do Eclipse é a 4.3.2 (Kepler).
 O procedimento de configuração é descrito em detalhes, abaixo.
 
 \subsection{Exportando as regras do SonarQube}
@@ -313,7 +313,7 @@ Este artigo procurou demonstrar a forma como a análise estática de código é 
 
 \section*{Agradecimentos}
 
-Agradecimentos a Wender~F.~Andrade e Mario~L.~B.~C.~Gomes pelo refinamento de conceitos, pelo print screen das telas do SonarQube e pela revisão deste artigo.
+Agradecimentos a Wender~F.~Andrade, Mario~L.~B.~C.~Gomes, Marcos~Oliveira e Helton~Ribeiro pelo refinamento de conceitos, pelo print screen das telas do SonarQube e pela revisão deste artigo.
 
 
 \bibliographystyle{IEEEtran}
