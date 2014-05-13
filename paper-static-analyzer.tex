@@ -13,7 +13,7 @@
 \author{
   Daniel~M.~Assis
   \IEEEcompsocitemizethanks{
-    \IEEEcompsocthanksitem Daniel M. Assis (danielmedeiros@computer.org)
+    \IEEEcompsocthanksitem Daniel M. Assis (daniel.medeiros.assis@gmail.com)
   }
 }
 
@@ -67,14 +67,14 @@ Sabe-se que quanto mais cedo um problema é encontrado no código, mais barato �
 \label{flow_after}
 \end{figure}
 
-Esta simplificação no fluxo exige, na prática, que o desenvolvedor realize a análise estática de código (e a correção indicada) antes de versionar a modificação\cite{jamesshore_ci_attitude}. O SonarQube poderia, posteriormente, evidenciar uma estabilidade no número de ocorrências em relação ao tempo (e com esta estabilidade observada, seria possível eliminar a prática de \emph{"enxugar gelo"}, através da atuação na redução efetiva de ocorrências sem que novas ocorrências estejam sendo adicionadas pelo ciclo de desenvolvimento em paralelo). 
+Esta simplificação no fluxo exige, na prática, que o desenvolvedor realize a análise estática de código (e a correção indicada) antes de versionar a modificação\cite{jamesshore_ci_attitude}. O SonarQube poderia, posteriormente, evidenciar uma estabilidade no número de violações em relação ao tempo (e com esta estabilidade observada, seria possível eliminar a prática de \emph{"enxugar gelo"}, por meio da atuação na redução efetiva de violações sem que novas violações estejam sendo adicionadas pelo ciclo de desenvolvimento em paralelo). 
 
-Contudo, para que o desenvolvedor incorpore o trabalho de análise de código-fonte à sua rotina de forma a não impactar em sua produtividade, é preciso que as ferramentas de análise estática de código sejam o mais transparente possíveis. O uso do SonarQube instalado localmente na máquina do desenvolvedor é uma alternativa pouco produtiva neste contexto, pois a ação de executar a validação das regras exige esforço explícito do desenvolvedor, de forma que não é transparente. Uma melhor abordagem é a de que a própria IDE indique a não-conformidade do código conforme o mesmo esteja sendo escrito. Para isto, a IDE precisa fazer uso de plugins que validem o código-fonte em relação às regras de qualidade assumidas pela empresa. 
+Contudo, para que o desenvolvedor incorpore o trabalho de análise de código-fonte à sua rotina de forma a não impactar em sua produtividade, é preciso que as ferramentas de análise estática de código sejam o mais transparente possíveis em relação à necessidade de execução. Uma alternativa comum a ser citada poderia ser o uso da ferramenta SonarQube localmente na máquina do desenvolvedor; contudo, esta abordagem apresenta-se pouco produtiva, pois exige esforço explícito do desenvolvedor e configuração adicional externa à IDE, de forma que não é transparente quanto à sua execução \emph{(a seção "Experimento e resultados observados", deste artigo, detalha este problema por meio de um breve estudo de caso)}. Desta forma, a abordagem sugerida é a de que a própria IDE indique as violações no código conforme estejam sendo escritas. Para isto, a IDE precisa fazer uso de plugins que validem o código-fonte em relação às regras de qualidade assumidas pela empresa. 
 
 
 \section{Ferramentas e Métodos}
 
-O SonarQube é uma ferramenta que, dentre outras funções, possui plugins capazes de realizar a análise estática de código através de um conjunto padrão de regras que podem ser customizadas. Abaixo, segue uma descrição geral dos plugins mais populares para este fim:
+O SonarQube é uma ferramenta que, dentre outras funções, possui plugins capazes de realizar a análise estática de código por meio de um conjunto padrão de regras. Abaixo, segue uma descrição geral dos plugins mais populares para este fim:
 
 \begin{itemize}
 \item Checkstyle: verifica e valida aderência do código-fonte em relação a convenções de escrita;
@@ -82,7 +82,7 @@ O SonarQube é uma ferramenta que, dentre outras funções, possui plugins capaz
 \item FindBugs: verifica potenciais bugs
 \end{itemize}
 
-Estes mesmos plugins também estão disponíveis para Eclipse, que é a IDE mais popular para desenvolvimento Java. 
+Estes mesmos plugins também estão disponíveis para Eclipse, que é a IDE mais popular para desenvolvimento Java\cite{java_report_2012}. 
 
 Desta forma, objetivando a configuração da IDE que valide automaticamente o código-fonte sendo modificado com base nas regras da empresa, o processo de configuração do Eclipse para incorporar as regras do SonarQube consiste em:
 
@@ -240,15 +240,15 @@ A instalação do plugin PMD\cite{pmd} segue o processo análogo à instalação
 
 \begin{itemize}
 \item O repositório do PMD é "http://sourceforge.net/projects/pmd/
-files/pmd-eclipse/update-site/"
-\item O plugin a ser instalado é o "PMD for Eclipse 4"
+files/pmd-eclipse/update-site/";
+\item O plugin a ser instalado é o "PMD for Eclipse 4".
 \end{itemize}
   
 Em relação à configuração do plugin, acesse o menu "Window/Preferences", opção "PMD/Rule Configuration", e siga os passos:
 
 \begin{itemize}
-\item Apague todas as regras 
-\item Importe o arquivo previamente exportado pelo SonarQube, pela opção "Import Rule Set"
+\item Apague todas as regras;
+\item Importe o arquivo previamente exportado pelo SonarQube, pela opção "Import Rule Set".
 \end{itemize}
 
 \begin{figure}[ht!]
@@ -273,8 +273,8 @@ Agora, a IDE consegue validar o código-fonte utilizando as regras do PMD. Para 
 A instalação do plugin Checkstyle\cite{checkstyle_eclipse_plugin} segue o processo análogo à instalação dos plugins FindBugs e PMD, de forma que não será novamente descrito. Apenas observam-se as seguintes especificidades:
 
 \begin{itemize}
-\item O repositório do Checkstyle é "http://eclipse-cs.sf.net/update"
-\item Os artefatos a serem instalados são "Checkstyle" e "Extension for eclipse-cs plugin with additional Checks"
+\item O repositório do Checkstyle é "http://eclipse-cs.sf.net/update";
+\item Os artefatos a serem instalados são "Checkstyle" e "Extension for eclipse-cs plugin with additional Checks".
 \end{itemize}
   
 Em relação à configuração do plugin, acesse o menu "Window/Preferences", opção "Checkstyle", e siga os passos:
@@ -300,11 +300,44 @@ Agora, a IDE consegue validar o código-fonte utilizando as regras do Checkstyle
 \label{eclipse-checkstyle-02}
 \end{figure}
 
+
+\section{Experimento e resultados observados}
+
+Como forma de validar o conceito aqui proposto, considerando tempo de identificação de violações em código-fonte e recursos consumidos pela máquina, o seguinte método Java foi criado para servir como objeto de análise:
+
+\begingroup
+\fontsize{9pt}{10pt}\selectfont
+\begin{verbatim}
+public BigDecimal sum()
+{
+    BigDecimal value = new BigDecimal(10);
+    value.add(new BigDecimal(22));
+    System.out.println(value);
+    return value;
+}
+\end{verbatim}
+\endgroup
+
+Este método possui uma série de violações de diferentes níveis de criticidade, dentre elas: 
+
+\begin{itemize}
+\item uso injustificado de System.out.println;
+\item má-utilização de objeto imutável (o método "add" do BigDecimal não adiciona o valor no próprio objeto - como poderia ser esperado - e sim retorna uma nova instância com a soma);
+\item formatação do bloco (a chave de abertura do corpo do método não está na mesma linha da assinatura do método);
+\end{itemize}
+
+De forma a analisar violações neste código, foram aplicadas duas abordagens:
+
+\begin{itemize}
+\item Validação pelo uso de plugins corretamente configurados na IDE: a identificação de violações foi instantânea, e não foi observado aumento do consumo de memória no processo da IDE;
+\item Validação sem plugins: foi preciso executar o SonarQube contra o código sendo alterado para verificar as violações. Após configuração do projeto para uso pelo SonarQube (criação e correta configuração do arquivo sonar-project.properties no diretório do projeto), os passos necessários foram: iniciar o processo do SonarQube, executar o sonar-runner no diretório do projeto (para coleta de métricas e atualização da base de dados do SonarQube), acessar a interface Web do SonarQube, e verificar as violações. O tempo observado nestas etapas levou alguns minutos e observou-se aumento de consumo de memória (criação de processo local do SonarQube). \end{itemize}
+
+
 \section{Considerações Gerais}
 
 De forma geral, as configurações dos plugins foram realizadas num nível de preferências (que é um nível mais abrangente do que o nível de configuração de projetos). Contudo, cada um dos três plugins também podem ser configurados no nível de propriedades de projeto. Quando não descrito especificamente nos passos deste artigo, recomenda-se sempre realizar as configurações no nível de preferências, e utilizar o nível de projeto apenas para configurações desejadas que sejam específicas para um dado projeto.
 
-O método aqui proposto também foi reproduzido na IDE IntelliJ, apresentando melhores resultados do que o Eclipse em relação a aspectos como integração com plugins, configuração e estabilidade. O Eclipse foi utilizado neste estudo por sua popularidade, mas julga-se que o IntelliJ é uma melhor IDE em termos profissionais. Desta forma, considera-se importante avaliar o uso do IntelliJ como IDE de desenvolvimento de forma a otimizar ainda mais o método e ferramentas propostos neste artigo.
+O método aqui proposto foi parcialmente reproduzido na IDE IntelliJ, apresentando melhores resultados que o Eclipse em relação a aspectos como integração com plugins, facilidade de configuração e estabilidade. O trabalho não foi conclusivo no sentido em que nem todos os testes foram realizados, mas sugerem potencial de maior produtividade com base nos aspectos acima citados. Desta forma, uma melhor avaliação do uso do IntelliJ é sugerida como forma a otimizar ainda mais o método e ferramentas propostos neste artigo.
 
 
 \section{Conclusão}
@@ -313,7 +346,7 @@ Este artigo procurou demonstrar a forma como a análise estática de código é 
 
 \section*{Agradecimentos}
 
-Agradecimentos a Wender~F.~Andrade, Mario~L.~B.~C.~Gomes, Marcos~Oliveira e Helton~Ribeiro pelo refinamento de conceitos, pelo print screen das telas do SonarQube e pela revisão deste artigo.
+Agradecimentos a Wender~F.~Andrade, Mario~L.~B.~C.~Gomes, Marcos~Oliveira, Helton~Ribeiro e Pedro~Leão pelo refinamento de conceitos, pelo print screen das telas do SonarQube e pela revisão deste artigo.
 
 
 \bibliographystyle{IEEEtran}
